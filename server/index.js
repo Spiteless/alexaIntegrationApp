@@ -2,11 +2,11 @@ require('dotenv').confing()
 const express = require("express")
 const massive = require("massive")
 const session = require("express-session")
+const auth = require('./Controllers/auth')
 
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env
 
 // controllers
-
 const app = express();
 
 app.use(express.json());
@@ -33,9 +33,9 @@ massive ({
 
 //endpoints
 
-// app.post('/auth/login', auth.login)
-// app.post('/auth/register', auth.register)
-// app.get('/auth/logout', auth.logout)
-// app.get('/auth/user', auth.getUser)
+app.post('/auth/login', auth.login)
+app.post('/auth/register', auth.register)
+app.get('/auth/logout', auth.logout)
+app.get('/auth/user', auth.getUser)
 
 app.listen(SERVER_PORT, () => console.log(`Conncted to server on ${SERVER_PORT}`))

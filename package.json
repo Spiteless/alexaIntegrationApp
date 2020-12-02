@@ -13,8 +13,10 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "massive": "^6.6.0",
+    "mongodb": "^3.6.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3"
   },
   "scripts": {

@@ -7,11 +7,11 @@
 - Add completed sessions to database through voice
   - client name
   - date (default today)
-  - payment ($ amount)
-  - payment type (prepaid vs package)
 
 ### Post MVP
 
+- payment ($ amount)`
+- payment type (prepaid vs package)
 - Tell me n most recent transactions
   - config?
     - just the names
@@ -30,7 +30,10 @@
 - auth
   - OAuth via google
 - edit transactions
-- 
+
+### Post MVP
+
+
 
 ## Alexa thoughts:
 if a field isn't valid/specified have defaults. 
@@ -42,3 +45,13 @@ if a field isn't valid/specified have defaults.
 
 - Be able to flag rows with defaults used
   - probably use a secondary route? - Dillon isn't sure about this.
+
+## Views
+
+- Login page
+- Data display page
+  - Add field
+    - Client name
+    - Date of session
+  - Edit Field
+  - Delete Field

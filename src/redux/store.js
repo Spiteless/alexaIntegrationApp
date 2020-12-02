@@ -5,7 +5,7 @@ import authReducer from './authReducer'
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    // auth: authReducer,
+    // auth: authReducer, 
 })
 
-export default createStore(rootReducer, applyMiddleware(promiseMiddleware))
+expportdefault createStore(rootReducer, applyMiddleware(promiseMiddleware))

@@ -21,8 +21,8 @@ const TransactionTable = (props) => {
             <th>Name</th>
             <th>Date</th>
         </tr>
-        {dummy.map(session => (
-            <tr>
+        {dummy.map((session, i) => (
+            <tr key={i}>
                 <td>{session.clientName}</td>
                 <td>{session.date}</td>
             </tr>

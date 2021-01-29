@@ -1,8 +1,8 @@
-require('dotenv').confing()
+require("dotenv").config({path: __dirname + '/../.env'})
 const express = require("express")
-const massive = require("massive")
 const session = require("express-session")
-// const auth = require('./Controllers/auth')
+const cors = require('cors')
+const auth = require('./Controllers/auth')
 
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env
 
@@ -10,11 +10,18 @@ const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env
 const app = express();
 
 app.use(express.json());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested With, Content-Type, Accept');
+    next();
+ });
+// app.use(cors({
+//     origin: 'http://google.com'
+// }))
 
 app.use(
     session({
-        // resave: false,
-        // saveUninitialized: true,
         secret: SESSION_SECRET,
         cookie: {
             maxage: 1000 * 60 * 24 * 15, // 5 days
@@ -22,18 +29,11 @@ app.use(
     })
 );
 
-// massive ({
-//     connectionString: CONNECTION_STRING,
-//     ssl: {rejectUnauthorized: false}
-// })
-//     .then((db) => {
-//         console.log("Database connected")
-//     })
-//     .catch((err => console.log(`Database error: ${err}`)))
-
 //endpoints
-
-// app.post('/auth/login', auth.login)
+console.log("SERVER RUNNING")
+app.get('/oauthlogin', auth.oauthlogin)
+app.post('/login', auth.login)
+// app.post('/auth/', auth.login)
 // app.post('/auth/register', auth.register)
 // app.get('/auth/logout', auth.logout)
 // app.get('/auth/user', auth.getUser)

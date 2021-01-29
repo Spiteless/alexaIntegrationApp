@@ -60,3 +60,38 @@
 //         }
 //     }
 // }
+
+const CLIENT_ID = encodeURI('37539307676-o628fhhnhnbqe93njrp9ma27of0q14vp.apps.googleusercontent.com')
+const CLIENT_SECRET = encodeURI(process.env.CLIENT_SECRET)  // Read from a file or environmental variable in a real app
+const SCOPE = encodeURI('https://www.googleapis.com/auth/userinfo.email')
+const REDIRECT_URI = encodeURI('http://localhost:3000/login')
+const URL = 'https://accounts.google.com/o/oauth2/v2/auth?response_type=code'
+const RANDOM_STATE = "foo" //change me later
+
+// auth_uri = ('https://accounts.google.com/o/oauth2/v2/auth?response_type=code'
+//         '&client_id={}&redirect_uri={}&scope={}').format(CLIENT_ID, REDIRECT_URI, SCOPE)
+
+
+module.exports = {
+    oauthlogin: async (req, res) => {
+        console.log("hit oauthlogin")
+        // const authUri = `${URL}&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPE}&state=${RANDOM_STATE}`
+        const authUri = `http://www.google.com`
+        res.redirect(authUri)
+        //send a request to google
+        //response from google will be URL to redirect user to
+        //rediret user to URL
+    },
+    login: async (req, res) => {
+        console.log(req)
+        res.redirect('/')
+
+        //if SUCCESS
+            //receive success response
+            //return response token to google
+            //google returns authentication
+            //redirect to dashboard logged in
+        //if FAIL 
+            //dashboard with error not authenticated
+    }
+}

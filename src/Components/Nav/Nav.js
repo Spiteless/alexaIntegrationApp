@@ -7,7 +7,7 @@ const Nav = (props) => {
     <nav className="nav">
       <Link className="nav__link" to="/settings">Settings</Link>
       <Link className="nav__link" to="/">Home</Link>
-      <Link className="nav__link" to="/login">Sign in with Google</Link>
+      <Link className="nav__link" to="/oauthlogin">Sign in with Google</Link>
     </nav>
   );
 }

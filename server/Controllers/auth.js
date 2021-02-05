@@ -1,5 +1,6 @@
 // const bcrypt = require('bcrypt');
-
+var request = require('request');
+let times = 0;
 // module.exports = {
 //     login: async (req, res) => {
 //         console.log('Fired Login', req.body)
@@ -64,7 +65,7 @@
 const CLIENT_ID = encodeURI('37539307676-o628fhhnhnbqe93njrp9ma27of0q14vp.apps.googleusercontent.com')
 const CLIENT_SECRET = encodeURI(process.env.CLIENT_SECRET)  // Read from a file or environmental variable in a real app
 const SCOPE = encodeURI('https://www.googleapis.com/auth/userinfo.email')
-const REDIRECT_URI = encodeURI('http://localhost:3000/login')
+const REDIRECT_URI = encodeURI('http://localhost:6968/login')
 const URL = 'https://accounts.google.com/o/oauth2/v2/auth?response_type=code'
 const RANDOM_STATE = "foo" //change me later
 
@@ -75,23 +76,59 @@ const RANDOM_STATE = "foo" //change me later
 module.exports = {
     oauthlogin: async (req, res) => {
         console.log("hit oauthlogin")
-        // const authUri = `${URL}&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPE}&state=${RANDOM_STATE}`
-        const authUri = `http://www.google.com`
-        res.redirect(authUri)
+        console.log('request headers: ', req.headers);
+        const authUri = `${URL}&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPE}&state=${RANDOM_STATE}`
+        // const authUri = `http://localhost:3000/foo`;
+        // res.append("Access-Control-Allow-Origin", "*");
+        res.send({authUri});
         //send a request to google
         //response from google will be URL to redirect user to
         //rediret user to URL
     },
     login: async (req, res) => {
-        console.log(req)
+        console.log('made it wooooo', req);
+        if(times < 5) {
+            times++
+            const data = {
+                code: req.query.code,
+                client_id: CLIENT_ID,
+                client_secret: CLIENT_SECRET,
+                redirect_uri: 'http://localhost:6968/login',
+                grant_type: 'authorization_code'
+            };
+            const requestData = {
+                uri: 'https://oauth2.googleapis.com/token',
+                body: JSON.stringify(data),
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+            request.post(requestData, (...args) => {
+                console.log('made it back from thing', args);
+                res.redirect('http://localhost:3000/foo');
+            })
+        }
+        //  hi google. yeah, we are who we said we are. here's our secret. let us in please
         res.redirect('/')
 
         //if SUCCESS
+        /*
+        auth_code = flask.request.args.get('code')
+    data = {'code': auth_code,
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET,
+            'redirect_uri': REDIRECT_URI,
+            'grant_type': 'authorization_code'}
+    r = requests.post('https://oauth2.googleapis.com/token', data=data)
+    flask.session['credentials'] = r.text
+    return flask.redirect(flask.url_for('index'))
+        */
             //receive success response
             //return response token to google
             //google returns authentication
             //redirect to dashboard logged in
-        //if FAIL 
+        //if FAIL
             //dashboard with error not authenticated
     }
 }

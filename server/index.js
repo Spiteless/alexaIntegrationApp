@@ -10,15 +10,14 @@ const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env
 const app = express();
 
 app.use(express.json());
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested With, Content-Type, Accept');
-    next();
- });
-// app.use(cors({
-//     origin: 'http://google.com'
-// }))
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested With, Content-Type, Accept');
+//     next();
+//  });
+// app.use(cors());
+app.use(cors());
 
 app.use(
     session({
@@ -31,8 +30,12 @@ app.use(
 
 //endpoints
 console.log("SERVER RUNNING")
+app.get('/', function(req, res, next) {
+    res.redirect('http://localhost:3000');
+})
 app.get('/oauthlogin', auth.oauthlogin)
-app.post('/login', auth.login)
+app.get('/login', auth.login)
+app.get('/foo', () => console.log('made a get to foo'));
 // app.post('/auth/', auth.login)
 // app.post('/auth/register', auth.register)
 // app.get('/auth/logout', auth.logout)
